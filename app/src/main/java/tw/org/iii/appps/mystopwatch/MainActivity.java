@@ -104,12 +104,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doLap(){
-    
+        HashMap<String,String> row = new HashMap<>();
+        row.put(from[0], "" + (data.size()+1));
+        row.put(from[1], toClockString(iCounter));
+        data.add(0, row);
+        adapter.notifyDataSetChanged();
     }
 
     private void doReset(){
         iCounter = 0;
         clock.setText(toClockString(iCounter));
+        data.clear();
+        adapter.notifyDataSetChanged();
     }
 
     public void doRight(View view) {
