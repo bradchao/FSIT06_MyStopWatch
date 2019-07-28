@@ -10,8 +10,12 @@ import android.os.strictmode.UnbufferedIoViolation;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private CounterTask task;
     private int iCounter;
     private UIHandler uiHandler;
+
+    private ListView listLap;
+    private SimpleAdapter adapter;
+    private LinkedList<HashMap<String,String>> data = new LinkedList<>();
+    private String[] from = {"index", "clock"};
+    private int[] to = {R.id.item_index, R.id.item_clock};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
 
         leftBtn = findViewById(R.id.leftBtn);
         rightBtn = findViewById(R.id.rightBtn);
+
+        listLap = findViewById(R.id.lapList);
+        initListView();
+    }
+
+    private void initListView(){
+        adapter = new SimpleAdapter(this,
+                data,R.layout.lap_item,from, to);
+        listLap.setAdapter(adapter);
     }
 
     @Override
@@ -67,11 +86,30 @@ public class MainActivity extends AppCompatActivity {
     private static String toClockString(int i){
         int hs = i % 100;
         int ts = i / 100;
-        
-        return ts + "." + hs;
+        int hh = ts / (60*60);
+        int mm = (ts - hh*60*60) / 60;
+        int ss = ts % 60;
+
+        return hh + ":" + mm + ":" + ss + "." + hs;
     }
 
     public void doLeft(View view) {
+        if (isRunning){
+            // Lap
+            doLap();
+        }else{
+            // Resset
+            doReset();
+        }
+    }
+
+    private void doLap(){
+    
+    }
+
+    private void doReset(){
+        iCounter = 0;
+        clock.setText(toClockString(iCounter));
     }
 
     public void doRight(View view) {
