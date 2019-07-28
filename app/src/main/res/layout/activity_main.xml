@@ -9,11 +9,14 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/clock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="64sp"
+        android:textSize="54sp"
         android:gravity="center"
         android:text="00:00:00.00"
+        android:textStyle="bold"
+        android:textColor="#000"
         />
     <View
         android:layout_width="match_parent"
@@ -26,19 +29,26 @@
         android:orientation="horizontal"
         >
         <Button
+            android:id="@+id/leftBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="RESET"
+            android:onClick="doLeft"
+            android:textAllCaps="false"
             />
         <Button
+            android:id="@+id/rightBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Start"
+            android:onClick="doRight"
+            android:textAllCaps="false"
             />
     </LinearLayout>
     <ListView
+        android:id="@+id/lapList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
